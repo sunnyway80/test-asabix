@@ -10,8 +10,18 @@
          */
         public function up(): void
         {
-            Schema::create('tags', static function (Blueprint $table) {
+            Schema::create('tag_translations', static function (Blueprint $table) {
                 $table->uuid('id')->primary();
+                $table->string('lang_id')->index();
+
+                $table->uuid('tag_id');
+                $table->unique(['tag_id', 'lang_id']);
+                $table->foreign('tag_id')
+                    ->references('id')
+                    ->on('tags')
+                    ->onDelete('cascade');
+
+                $table->string('name');
                 $table->timestamps();
                 $table->softDeletes();
             });
@@ -22,8 +32,6 @@
          */
         public function down(): void
         {
-            Schema::dropIfExists('tag_translations');
-            Schema::dropIfExists('post_tag');
-            Schema::dropIfExists('tags');
+            Schema::dropIfExists('post_tag_translations');
         }
     };

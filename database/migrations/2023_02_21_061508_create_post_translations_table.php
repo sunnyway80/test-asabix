@@ -10,11 +10,21 @@
          */
         public function up(): void
         {
-            Schema::create('posts', static function (Blueprint $table) {
+            Schema::create('post_translations', static function (Blueprint $table) {
                 $table->uuid('id')->primary();
-                $table->string('name')
-                    ->unique();
-                $table->string('slug');
+                $table->string('lang_id')->index();
+
+                $table->uuid('post_id');
+                $table->unique(['post_id', 'lang_id']);
+
+                $table->foreign('post_id')
+                    ->references('id')
+                    ->on('posts')
+                    ->onDelete('cascade');
+
+                $table->string('title');
+                $table->text('description');
+                $table->text('content');
                 $table->timestamps();
                 $table->softDeletes();
             });
@@ -26,7 +36,5 @@
         public function down(): void
         {
             Schema::dropIfExists('post_translations');
-            Schema::dropIfExists('post_tag');
-            Schema::dropIfExists('posts');
         }
     };

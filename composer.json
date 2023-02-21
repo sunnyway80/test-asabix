@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "astrotomic/laravel-translatable": "^11.12",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
@@ -50,6 +51,12 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "check": [
+            "./vendor/bin/php-cs-fixer fix -v --dry-run --show-progress=dots"
+        ],
+        "fix": [
+            "./vendor/bin/php-cs-fixer fix -v --show-progress=dots"
         ]
     },
     "extra": {
