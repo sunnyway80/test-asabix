@@ -34,7 +34,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
         $model = parent::create($data);
 
-        $model->tags()->sync($data['tags']);
+        $model->tags()->sync($data['tags'] ?? []);
 
         $model->load('tags');
 
@@ -47,7 +47,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
         $model = parent::update($model, $data);
 
-        $model->tags()->sync($data['tags']);
+        $model->tags()->sync($data['tags'] ?? []);
 
         $model->load('tags');
 

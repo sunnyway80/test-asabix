@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Entity\PaginateLimits;
+use App\Http\Requests\TagRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Repositories\Interfaces\PostRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -47,17 +47,21 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResource
+    public function store(TagRequest $request): JsonResource
     {
-        return PostResource::make($this->repository->create($request->all()));
+        $data = $request->only(array_merge(['tags'], config('translatable.locales')));
+
+        return PostResource::make($this->repository->create($data));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post): JsonResource
+    public function update(TagRequest $request, Post $post): JsonResource
     {
-        return PostResource::make($this->repository->update($post, $request->all()));
+        $data = $request->only(array_merge(['tags'], config('translatable.locales')));
+
+        return PostResource::make($this->repository->update($post, $data));
     }
 
     /**

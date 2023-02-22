@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Entity\PaginateLimits;
+use App\Http\Requests\TagRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Repositories\Interfaces\TagRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -47,17 +47,21 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResource
+    public function store(TagRequest $request): JsonResource
     {
-        return TagResource::make($this->repository->create($request->all()));
+        $data = $request->only(config('translatable.locales'));
+
+        return TagResource::make($this->repository->create($data));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tag $tag): JsonResource
+    public function update(TagRequest $request, Tag $tag): JsonResource
     {
-        return TagResource::make($this->repository->update($tag, $request->all()));
+        $data = $request->only(config('translatable.locales'));
+
+        return TagResource::make($this->repository->update($tag, $data));
     }
 
     /**
