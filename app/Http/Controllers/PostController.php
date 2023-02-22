@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entity\PaginateLimits;
-use App\Http\Requests\TagRequest;
+use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Repositories\Interfaces\PostRepositoryInterface;
@@ -47,7 +47,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TagRequest $request): JsonResource
+    public function store(PostRequest $request): JsonResource
     {
         $data = $request->only(array_merge(['tags'], config('translatable.locales')));
 
@@ -57,7 +57,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TagRequest $request, Post $post): JsonResource
+    public function update(PostRequest $request, Post $post): JsonResource
     {
         $data = $request->only(array_merge(['tags'], config('translatable.locales')));
 

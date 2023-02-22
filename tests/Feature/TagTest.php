@@ -105,7 +105,7 @@ class TagTest extends TestCase
      */
     public function destroy(): void
     {
-        $tag = Tag::query()->with('posts')->first();
+        $tag = Tag::query()->whereHas('posts')->first();
 
         $this->assertDatabaseHas('post_tag', [
             'tag_id'         => $tag->id,
